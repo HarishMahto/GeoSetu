@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FRA Atlas"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_color"
+        android:padding="16dp" />
+
+    <!-- Map Placeholder -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
+
+        <TextView
+            android:id="@+id/tvMapPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="🗺️ Interactive Map View\n\nGoogle Maps will be integrated here\nShowing village boundaries and claim polygons"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text"
+            android:gravity="center"
+            android:padding="16dp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Layer Tabs -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/primary_color"
+        app:tabIndicatorColor="@color/primary_color" />
+
+    <!-- Claims List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMapClaims"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp" />
+
+</LinearLayout>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FRA Atlas &amp; DSS</string>
+    <string name="login_title">Forest Rights Act Management System</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="fra_atlas">FRA Atlas</string>
+    <string name="dss">DSS</string>
+    <string name="profile">Profile</string>
+</resources>
