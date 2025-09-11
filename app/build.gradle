@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'harish.project.geosetu'
-    compileSdk 36
+    compileSdk 35
 
     defaultConfig {
         applicationId "harish.project.geosetu"
         minSdk 29
-        targetSdk 36
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -39,9 +39,8 @@ dependencies {
     implementation libs.constraintlayout
     
     // Room database
-    implementation 'androidx.room:room-runtime:2.6.1'
-    implementation libs.room.common.jvm
-    annotationProcessor 'androidx.room:room-compiler:2.6.1'
+    implementation 'androidx.room:room-runtime:2.8.0'
+    annotationProcessor 'androidx.room:room-compiler:2.8.0'
     
     // ViewModel and LiveData
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.7.0'
