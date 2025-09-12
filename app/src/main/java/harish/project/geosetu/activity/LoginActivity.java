@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Initialize data on first run
+        //new
         DataInitializer.initializeData(this);
 
         initViews();
