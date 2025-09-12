@@ -15,7 +15,7 @@ import harish.project.geosetu.model.User;
 
 @Database(
     entities = {User.class, Claim.class, DSSRecommendation.class, Notification.class},
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -32,6 +32,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "fra_database")
+                            .fallbackToDestructiveMigration()
                             .allowMainThreadQueries() // For demo purposes only
                             .build();
                 }

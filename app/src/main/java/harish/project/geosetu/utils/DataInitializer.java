@@ -93,15 +93,15 @@ public class DataInitializer {
         // Recommendations for approved claim C1002
         DSSRecommendation rec1 = new DSSRecommendation("C1002", "PM-KISAN", 
                 "Pradhan Mantri Kisan Samman Nidhi", "Farmland > 2 acres", 
-                "₹6000 per year in 3 installments", true, currentDate);
-        
+                "₹6000 per year in 3 installments", true, currentDate, "Land area threshold met");
+
         DSSRecommendation rec2 = new DSSRecommendation("C1002", "Jal Jeevan Mission", 
                 "Har Ghar Jal Scheme", "No water source within 500m", 
-                "Piped water connection to household", true, currentDate);
-        
+                "Piped water connection to household", true, currentDate, "Village flagged for water gap");
+
         DSSRecommendation rec3 = new DSSRecommendation("C1002", "MGNREGA", 
                 "Mahatma Gandhi National Rural Employment Guarantee Act", "Community forest area > 3 acres", 
-                "100 days guaranteed employment for pond construction", true, currentDate);
+                "100 days guaranteed employment for pond construction", true, currentDate, "CFR area size eligible");
 
         database.dssRecommendationDao().insert(rec1);
         database.dssRecommendationDao().insert(rec2);
