@@ -5,12 +5,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import harish.project.geosetu.database.AppDatabase;
 import harish.project.geosetu.model.Claim;
 import harish.project.geosetu.model.DSSRecommendation;
 import harish.project.geosetu.model.Notification;
 import harish.project.geosetu.repository.ClaimRepository;
-import harish.project.geosetu.database.AppDatabase;
 import harish.project.geosetu.utils.DSSEngine;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -19,12 +21,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ClaimViewModel extends AndroidViewModel {
-    private ClaimRepository claimRepository;
-    private AppDatabase database;
-    private MutableLiveData<String> operationResult;
-    private ExecutorService executor;
+    private final ClaimRepository claimRepository;
+    private final AppDatabase database;
+    private final MutableLiveData<String> operationResult;
+    private final ExecutorService executor;
 
-    public ClaimViewModel(Application application) {
+    public ClaimViewModel(@NonNull Application application) {
         super(application);
         claimRepository = new ClaimRepository(application);
         database = AppDatabase.getDatabase(application);
@@ -67,53 +69,64 @@ public class ClaimViewModel extends AndroidViewModel {
         });
     }
 
+    /**
+     * Requires ClaimDao to have:
+     * @Query("SELECT * FROM claims WHERE claimId = :claimId LIMIT 1")
+     * Claim getClaimByIdSync(String claimId);
+     */
     public void updateClaimStatus(@NonNull String claimId, String status, String comments, int reviewerId) {
         executor.execute(() -> {
             try {
-                Claim claim = database.claimDao().getClaimById(claimId).getValue();
-                if (claim != null) {
-                    claim.setStatus(status);
-                    claim.setReviewerComments(comments);
-                    claim.setReviewDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
-                    
+                String normalizedStatus = status == null ? "PENDING" : status.trim().toUpperCase(Locale.getDefault());
+                String safeComments = comments == null ? "" : comments.trim();
+                String reviewDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                String nowTs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
+                Claim claim = database.claimDao().getClaimByIdSync(claimId);
+                if (claim == null) {
+                    operationResult.postValue("Failed to update claim: claim not found");
+                    return;
+                }
+
+                database.runInTransaction(() -> {
+                    claim.setStatus(normalizedStatus);
+                    claim.setReviewerComments(safeComments);
+                    claim.setReviewDate(reviewDate);
+                    // reviewerId available if you later add it to Claim
+
                     claimRepository.update(claim);
-                    
-                    // Create notification for the claim owner
-                    String notificationTitle = status.equals("APPROVED") ? "Claim Approved" : "Claim Rejected";
-                    String notificationMessage = "Your claim " + claimId + " has been " + status.toLowerCase() + " by District Officer";
-                    
+
+                    String notificationTitle = "APPROVED".equals(normalizedStatus) ? "Claim Approved" : "Claim Rejected";
+                    String notificationMessage = "Your claim " + claimId + " has been " + normalizedStatus.toLowerCase(Locale.getDefault()) + " by District Officer";
+
                     Notification notification = new Notification(
-                        claim.getUserId(),
-                        notificationTitle,
-                        notificationMessage,
-                        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()),
-                        "CLAIM_UPDATE"
+                            claim.getUserId(),
+                            notificationTitle,
+                            notificationMessage,
+                            nowTs,
+                            "CLAIM_UPDATE"
                     );
-                    
                     database.notificationDao().insert(notification);
-                    
-                    // Generate DSS recommendations if approved
-                    if (status.equals("APPROVED")) {
+
+                    if ("APPROVED".equals(normalizedStatus)) {
                         List<DSSRecommendation> recommendations = DSSEngine.generateRecommendations(claim);
                         for (DSSRecommendation rec : recommendations) {
                             database.dssRecommendationDao().insert(rec);
                         }
-                        
-                        // Create DSS notification
                         if (!recommendations.isEmpty()) {
                             Notification dssNotification = new Notification(
-                                claim.getUserId(),
-                                "DSS Recommendations Available",
-                                "You are eligible for " + recommendations.size() + " government schemes",
-                                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()),
-                                "DSS_RECOMMENDATION"
+                                    claim.getUserId(),
+                                    "DSS Recommendations Available",
+                                    "You are eligible for " + recommendations.size() + " government schemes",
+                                    nowTs,
+                                    "DSS_RECOMMENDATION"
                             );
                             database.notificationDao().insert(dssNotification);
                         }
                     }
-                    
-                    operationResult.postValue("Claim " + status.toLowerCase() + " successfully");
-                }
+                });
+
+                operationResult.postValue("Claim " + normalizedStatus.toLowerCase(Locale.getDefault()) + " successfully");
             } catch (Exception e) {
                 operationResult.postValue("Failed to update claim: " + e.getMessage());
             }

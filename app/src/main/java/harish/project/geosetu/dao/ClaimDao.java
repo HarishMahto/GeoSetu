@@ -34,4 +34,8 @@ public interface ClaimDao {
 
     @Query("SELECT COUNT(*) FROM claims")
     int getClaimCount();
+
+    // Add the @Query annotation here
+    @Query("SELECT * FROM claims WHERE claimId = :claimId")
+    Claim getClaimByIdSync(String claimId);
 }
