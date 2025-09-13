@@ -23,7 +23,8 @@ public class DSSEngine {
                 "Farmland >= 2 acres",
                 "₹6000 per year in 3 installments",
                 true,
-                currentDate
+                currentDate,
+                "Land area " + claim.getLandArea() + " acres >= 2.0 threshold"
             );
             recommendations.add(pmKisan);
         }
@@ -37,7 +38,8 @@ public class DSSEngine {
                 "No water source within 500m",
                 "Piped water connection to household",
                 true,
-                currentDate
+                currentDate,
+                "Village " + claim.getVillage() + " flagged for water access gap"
             );
             recommendations.add(jalJeevan);
         }
@@ -51,7 +53,8 @@ public class DSSEngine {
                 "Community forest area >= 3 acres",
                 "100 days guaranteed employment for pond construction",
                 true,
-                currentDate
+                currentDate,
+                "CFR area " + claim.getLandArea() + " acres >= 3.0"
             );
             recommendations.add(mgnrega);
         }
@@ -65,7 +68,8 @@ public class DSSEngine {
                 "Individual or Community Forest Rights",
                 "₹2000 per acre annually for forest conservation",
                 true,
-                currentDate
+                currentDate,
+                "Claim type " + claim.getClaimType() + " qualifies"
             );
             recommendations.add(forestConservation);
         }
@@ -79,7 +83,8 @@ public class DSSEngine {
                 "Belongs to Scheduled Tribe",
                 "Educational and livelihood support",
                 true,
-                currentDate
+                currentDate,
+                "Tribe " + claim.getTribe() + " is eligible"
             );
             recommendations.add(tribalDev);
         }

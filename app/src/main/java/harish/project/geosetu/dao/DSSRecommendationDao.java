@@ -4,13 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import harish.project.geosetu.model.DSSRecommendation;
 import java.util.List;
 
 @Dao
 public interface DSSRecommendationDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(DSSRecommendation recommendation);
 
     @Query("SELECT * FROM dss_recommendations WHERE claimId = :claimId")

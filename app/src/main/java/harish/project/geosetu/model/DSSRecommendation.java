@@ -10,17 +10,19 @@ public class DSSRecommendation {
     public int id;
     public String claimId;
     public String schemeName;
+    // Added back missing field
     public String schemeDescription;
     public String eligibilityCriteria;
     public String benefits;
     public boolean isEligible;
     public String recommendationDate;
+    public String explanation;
 
     public DSSRecommendation() {}
 
     @Ignore
-    public DSSRecommendation(String claimId, String schemeName, String schemeDescription, 
-                           String eligibilityCriteria, String benefits, boolean isEligible, String recommendationDate) {
+    public DSSRecommendation(String claimId, String schemeName, String schemeDescription,
+                             String eligibilityCriteria, String benefits, boolean isEligible, String recommendationDate, String explanation) {
         this.claimId = claimId;
         this.schemeName = schemeName;
         this.schemeDescription = schemeDescription;
@@ -28,30 +30,34 @@ public class DSSRecommendation {
         this.benefits = benefits;
         this.isEligible = isEligible;
         this.recommendationDate = recommendationDate;
+        this.explanation = explanation;
     }
 
     // Getters and setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
-    
+
     public String getClaimId() { return claimId; }
     public void setClaimId(String claimId) { this.claimId = claimId; }
-    
+
     public String getSchemeName() { return schemeName; }
     public void setSchemeName(String schemeName) { this.schemeName = schemeName; }
-    
+
     public String getSchemeDescription() { return schemeDescription; }
     public void setSchemeDescription(String schemeDescription) { this.schemeDescription = schemeDescription; }
-    
+
     public String getEligibilityCriteria() { return eligibilityCriteria; }
     public void setEligibilityCriteria(String eligibilityCriteria) { this.eligibilityCriteria = eligibilityCriteria; }
-    
+
     public String getBenefits() { return benefits; }
     public void setBenefits(String benefits) { this.benefits = benefits; }
-    
+
     public boolean isEligible() { return isEligible; }
     public void setEligible(boolean eligible) { isEligible = eligible; }
-    
+
     public String getRecommendationDate() { return recommendationDate; }
     public void setRecommendationDate(String recommendationDate) { this.recommendationDate = recommendationDate; }
+
+    public String getExplanation() { return explanation; }
+    public void setExplanation(String explanation) { this.explanation = explanation; }
 }

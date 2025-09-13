@@ -9,6 +9,9 @@ import harish.project.geosetu.fragment.DashboardFragment;
 import harish.project.geosetu.fragment.FRAAtlasFragment;
 import harish.project.geosetu.fragment.DSSFragment;
 import harish.project.geosetu.fragment.ProfileFragment;
+import harish.project.geosetu.database.AppDatabase;
+import harish.project.geosetu.utils.DataInitializer;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
@@ -19,6 +22,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Seed initial data if needed
+        try {
+            DataInitializer.initializeData(getApplicationContext());
+            Log.d("MainActivity","DataInitializer invoked");
+        } catch (Exception e) {
+            Log.e("MainActivity","DataInitializer error", e);
+        }
 
         getUserData();
         initViews();

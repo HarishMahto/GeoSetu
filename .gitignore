@@ -13,3 +13,50 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Added common Android & build artifacts
+**/build/
+bin/
+gen/
+out/
+app/release/
+app/debug/
+
+# Android packaging outputs
+*.apk
+*.ap_
+*.aab
+
+# Compiled / generated
+*.dex
+*.class
+*.kotlin_metadata
+
+# Keystores (DO NOT COMMIT real ones)
+*.jks
+*.keystore
+
+# Logs / temp
+*.log
+*.hprof
+*.orig
+*.rej
+
+# Patch / diff leftovers
+*.patch
+
+# IDE miscellaneous
+.idea/
+*.iws
+
+# OS specific
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# Gradle
+.gradle/
+**/.gradle/
+
+# Caches
+*.cache
