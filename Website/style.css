@@ -1,0 +1,189 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  color: #222;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px 40px;
+  text-align: center;
+}
+
+/* Logo */
+.logo-container {
+  margin-bottom: 20px;
+}
+.logo {
+  width: 100px;
+  height: auto;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
+  transition: transform 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.05) rotate(3deg);
+}
+
+/* Brand */
+.brand-container {
+  margin-bottom: 15px;
+}
+.brand-name {
+  font-size: 42px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* Intro Text */
+.description {
+  max-width: 700px;
+  margin: 0 auto 30px;
+}
+.description p {
+  font-size: 18px;
+  color: #f1f5f9;
+}
+
+/* Download Button */
+.app-link {
+  margin: 25px 0 60px;
+}
+.app-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 36px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+.app-button:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  box-shadow: 0 10px 28px rgba(239, 68, 68, 0.5);
+}
+.app-button svg {
+  stroke: white;
+  transition: transform 0.3s ease;
+}
+.app-button:hover svg {
+  transform: translateX(5px);
+}
+
+/* Info Sections */
+.info-section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  text-align: left;
+}
+.info-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111827;
+}
+.info-section p {
+  font-size: 16px;
+  color: #374151;
+}
+.info-section ul {
+  list-style: none;
+  padding: 0;
+}
+.info-section ul li {
+  margin-bottom: 14px;
+  padding-left: 32px;
+  position: relative;
+  font-size: 16px;
+  color: #374151;
+}
+.info-section ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #4f46e5;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Background floating circles */
+.background-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  animation: float 8s ease-in-out infinite;
+}
+.circle-1 { width: 120px; height: 120px; top: 15%; left: 10%; }
+.circle-2 { width: 200px; height: 200px; bottom: 10%; right: 15%; animation-delay: 2s; }
+.circle-3 { width: 80px; height: 80px; bottom: 25%; left: 25%; animation-delay: 4s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .brand-name {
+    font-size: 32px;
+  }
+  .description p {
+    font-size: 16px;
+  }
+  .app-button {
+    font-size: 16px;
+    padding: 14px 28px;
+  }
+  .info-section {
+    margin: 20px;
+    padding: 25px;
+  }
+}
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 26px;
+  }
+  .info-section {
+    margin: 15px;
+    padding: 20px;
+  }
+  .info-section h2 {
+    font-size: 22px;
+  }
+  .info-section p, 
+  .info-section ul li {
+    font-size: 14px;
+  }
+}
